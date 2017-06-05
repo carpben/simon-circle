@@ -1,0 +1,101 @@
+
+
+body {
+  background-color: black;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  color: white;
+}
+
+#root{
+  margin:auto;
+  position: relative;
+  height: 500px;
+  width: 500px;
+}
+
+#center {
+  position: absolute;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  top:125px;
+  left: 125px;
+  background-color: black;
+  z-index: 100;
+}
+.color{
+  height: 220px;
+  width:220px;
+  margin: 10px;
+  font-size: 45px;
+  text-align: center;
+  line-height: 220px;
+
+}
+#red{
+  position: absolute;
+  background-color: red;
+  border-top-left-radius: 100%;
+  top: 15px;
+  left:15px;
+}
+#green {
+  position: absolute;
+  background-color: green;
+  border-top-right-radius: 100%;
+  top:15px;
+  left: 245px;
+}
+#blue {
+  position: absolute;
+  background-color: blue;
+  border-bottom-left-radius: 100%;
+  top: 245px;
+  left: 15px;
+}
+#yellow {
+  position: absolute;
+  background-color: yellow;
+  border-bottom-right-radius: 100%;
+  top: 245px;
+  left:245px;
+}
+#red.light {
+  background-color: pink;
+}
+#green.light {
+  background-color: lightgreen;
+}
+#blue.light {
+  background-color: lightblue;
+}
+#yellow.light {
+  background-color: #ff7
+}
+
+#questionView {
+  text-align: center;
+}
+
+#control {
+  display: flex;
+  justify-content: space-around;
+
+  /*justify-content: center;*/
+}
+#start {
+  border-radius: 50%;
+  font-weight: bold;
+}
+.active {
+  background-color: #aaa !important;
+}
+
+input {
+  display: inline-block;
+  background-color: white;
+  color:black;
+  width:5em;
+}
