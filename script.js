@@ -43,27 +43,26 @@ function SimonGame (options){
     </div>`
   }
 
-
-
   function render (){
-    let title = `<div id="title" class="text-center"><h1>SIMON</h1></div>`
-
-    WinText=["You", "Made", "It", "!!!"]
-    const steps = state.colorSequence.length
-
-    let board =COLORNAMES.reduce((accu, color, indx)=>{
+    WinText=["You", " Made", "It", "!!!"]
+    let colorDivs =COLORNAMES.reduce((accu, color, indx)=>{
       let extraclass = state.highlightedColor === color ? 'light' : ''
       return accu + `<div id="${color}" data-color="${color}" class="color ${extraclass}">
       ${ (state.gameSuccess) ? WinText[indx] : "" } </div>`
     }, "")
-    board = `<div id='board'> <div id=center></div> ${board} </div>`
 
-    let control = `<div id="control"><button type="button" id="start" class="btn btn-default btn-lg">GO!</button>
-    <button id="strict" type="button" class="btn btn-default btn-lg ${state.strict? "active" : "" }"> Strict </button>
-    <div id="steps"><h3>steps: <span> ${steps} </span></h3></div><div id="challenge"><h3>challenge: <span> ${state.challenge} </span></h3></div></div>`
+    let title = `<div id="title" class="text-center"><h1>SIMON</h1></div>`
+    const steps = state.colorSequence.length
+    let centerElements = `<div id="display" class="text-center"><div id="steps"><p>steps: <span> ${steps} </span></p></div><div id="challenge"><p>challenge: <span> ${state.challenge} </span></p></div></div>
+    <div id="start-button"><button type="button" id="start" class="btn btn-default">GO!</button></div>
+    <div id="strict-button"><button id="strict" type="button" class="btn btn-default ${state.strict? "active" : "" }"> Strict </button></div>`
+    let center = `<div id=center>${title} ${(state.questionView)? htmlQuestionView() : centerElements} </div>`
+
+    board = `<div id='board'> ${center}  ${colorDivs} </div>`
 
 
-    options.el.innerHTML = `${title} ${board} `
+
+    options.el.innerHTML = `${board}`
 
     let soundURL = ""
     if (state.gameSuccess){soundURL = "/celebration.wav"}
@@ -122,6 +121,7 @@ function handleUserMistake(){
   else {
     setTimeout(
       function(){
+        state.turn=TURN.computer
         showSequence(state.colorSequence)
           .then(()=>{startUserTurn()})
         }
@@ -239,7 +239,6 @@ function startNewGame(){
 
 function toggleStrictMode(){
   if (state.turn==TURN.computer){return}
-  if (state.turn!=TURN.user){return}
   state.strict = (!state.strict)
   render()
 }

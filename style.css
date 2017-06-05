@@ -18,10 +18,10 @@ body {
 #center {
   position: absolute;
   border-radius: 50%;
-  width: 200px;
-  height: 200px;
+  width: 240px;
+  height: 240px;
   top:125px;
-  left: 125px;
+  left: 128px;
   background-color: black;
   z-index: 100;
 }
@@ -78,16 +78,21 @@ body {
 #questionView {
   text-align: center;
 }
-
-#control {
-  display: flex;
-  justify-content: space-around;
-
-  /*justify-content: center;*/
+#center p {
+  font-size: 1.3em;
 }
+
 #start {
+  position: absolute;
   border-radius: 50%;
   font-weight: bold;
+  left: 96;
+  top: 140px;
+}
+#strict {
+  position: absolute;
+  left: 94;
+  top: 182px;
 }
 .active {
   background-color: #aaa !important;
