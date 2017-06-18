@@ -60,23 +60,26 @@ function SimonGame (options){
 
     board = `<div id='board'> ${center}  ${colorDivs} </div>`
 
-
-
     options.el.innerHTML = `${board}`
 
-    // "https://raw.githubusercontent.com/carpben/simon-circle/blob/master/"
     let soundURL = ""
-    if (state.gameSuccess){soundURL = "/celebration.wav"}
-    else if (state.mistake){soundURL = "/mistake.mp3"}
-    else if (state.success){soundURL = "/success.wav"}
+    const soundURLBase = "https://raw.githubusercontent.com/carpben/simon-circle/master/"
+    const SOUNDURLS = {
+      celebration: soundURLBase + "celebration.wav",
+      mistake: soundURLBase + "mistake.mp3",
+      success: soundURLBase + "success.wav",
+      COLORS: {
+        red: soundURLBase + "simonSound1.wav",
+        green: soundURLBase + "simonSound2.wav",
+        blue: soundURLBase + "simonSound3.wav",
+        yellow: soundURLBase + "simonSound4.wav",
+      },
+    }
+    if (state.gameSuccess){soundURL = SOUNDURLS.celebration}
+    else if (state.mistake){soundURL = SOUNDURLS.mistake}
+    else if (state.success){soundURL = SOUNDURLS.success}
     else if (state.highlightedColor){
-     const colorsoundURL = {
-       red: "https://raw.githubusercontent.com/carpben/simon-circle/master/simonSound1.wav",
-       green: "https://raw.githubusercontent.com/carpben/simon-circle/master/simonSound2.wav",
-       blue: "https://raw.githubusercontent.com/carpben/simon-circle/master/simonSound3.wav",
-       yellow: "https://raw.githubusercontent.com/carpben/simon-circle/master/simonSound4.wav",
-     }
-     soundURL = colorsoundURL[state.highlightedColor]
+     soundURL = SOUNDURLS.COLORS[state.highlightedColor]
     }
 
     if (soundURL){
@@ -139,7 +142,7 @@ function handleLevelSuccess(){
 
 function handleGameSuccess(){
   state.gameSuccess = true
-  state.turn = TURN.end
+  state.turn = TURN.neither
   render()
 }
 
@@ -169,7 +172,6 @@ function colorMouseDown(color){
 }
 
 function colorMouseUp(){
-  if (state.turn!=TURN.user){return}
   deBrightenColor()
 
   if (state.step==state.challenge){
@@ -235,6 +237,7 @@ function setChallenge(ev){
 function startNewGame(){
   if (state.turn==TURN.computer){return}
   state.colorSequence=[]
+  state.gameSuccess= false
   startNextlevel()
 }
 
