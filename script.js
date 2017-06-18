@@ -64,16 +64,17 @@ function SimonGame (options){
 
     options.el.innerHTML = `${board}`
 
+    // "https://raw.githubusercontent.com/carpben/simon-circle/blob/master/"
     let soundURL = ""
     if (state.gameSuccess){soundURL = "/celebration.wav"}
     else if (state.mistake){soundURL = "/mistake.mp3"}
     else if (state.success){soundURL = "/success.wav"}
     else if (state.highlightedColor){
      const colorsoundURL = {
-       red: "/simonSound1.wav",
-       green: "/simonSound2.wav",
-       blue: "/simonSound3.wav",
-       yellow: "/simonSound4.wav",
+       red: "https://raw.githubusercontent.com/carpben/simon-circle/blob/master/simonSound1.wav",
+       green: "https://raw.githubusercontent.com/carpben/simon-circle/blob/master/simonSound2.wav",
+       blue: "https://raw.githubusercontent.com/carpben/simon-circle/blob/master/simonSound3.wav",
+       yellow: "https://raw.githubusercontent.com/carpben/simon-circle/blob/master/simonSound4.wav",
      }
      soundURL = colorsoundURL[state.highlightedColor]
     }
