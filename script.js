@@ -89,13 +89,11 @@ function SimonGame (options){
   }
 
   function deBrightenColor(){
-    console.log('deBrightenColor')
     state.highlightedColor = null
     render()
   }
 
   function brightenColor(color){
-    console.log('BrightenColor')
     state.highlightedColor = color
     render()
   }
@@ -103,15 +101,16 @@ function SimonGame (options){
 //------   USER   -------
 
 function startUserTurn(){
+  console.log('startUserTurn')
   //reset some state stuff
   state.turn=TURN.user
   state.mistake = false
   state.success = false
   state.step=0
-
 }
 
 function handleUserMistake(){
+  state.turn=TURN.neither
   state.mistake = true
   render()
   state.mistake = false
@@ -126,7 +125,7 @@ function handleUserMistake(){
     setTimeout(
       function(){
         state.turn=TURN.computer
-        showSequence(state.colorSequence)
+        doComputerTurn(state.colorSequence)
           .then(()=>{startUserTurn()})
         }
     , 2800)
@@ -134,6 +133,7 @@ function handleUserMistake(){
 }
 
 function handleLevelSuccess(){
+  state.turn=TURN.neither
   state.success = true
   render()
   state.success = false
@@ -172,6 +172,8 @@ function colorMouseDown(color){
 }
 
 function colorMouseUp(){
+  if (state.turn!=TURN.user){return}
+
   deBrightenColor()
 
   if (state.step==state.challenge){
@@ -199,28 +201,66 @@ function showComputerColor(color){
   })
 }
 
-function showSequence(colorSequence=[]) {
+// function getDelay (delay){
+//   return new Promise ((resolve,reject) => {
+//     setTimeout(()=>{resolve()}, delay)
+//   })
+// }
+
+function showSequence(colorSequence=[], resolve) {
+  // return new Promise((resolve, reject)=>{
+  //
+  //
+  // })
+
+  //... stuff happens ...
+  //some asyc stuff
+  // resolve()
+
+  // return done
+  if (state.turn!=TURN.computer){
+    console.log('ShowSequence, state.turn = ', state.turn)
+  }
   colorSequence = colorSequence.slice(0)
   const DELAY = 175
 
   if(colorSequence.length === 0) {
-    return new Promise (function(resolve, reject){
-      resolve()
-    })
+    resolve()
+    return
   }
+    // return new Promise (function(resolve, reject){
+    //   resolve()
+    // })
+  // }
 
   let color = colorSequence.shift()
 
-  return showComputerColor(color)
+  showComputerColor(color)
     .then(()=>{
-      setTimeout(function(){showSequence(colorSequence)},DELAY)
+      setTimeout(function(){showSequence(colorSequence, resolve)},DELAY)
     })
+
+
+  // return new Promise ( (reject, resolve) => {
+  //   showComputerColor(color)
+  //     .then(()=>{
+  //       getDelay()
+  //         .then (()=>{showSequence(colorSequence)},DELAY)
+  //           .then (resolve())
+  //     })
+  // })
+}
+
+function doComputerTurn (){
+  return new Promise ( (resolve,reject) => {
+    showSequence(state.colorSequence, resolve)
+  })
 }
 
 function startNextlevel(){
   state.turn=TURN.computer
   addColorToSequence()
-  showSequence(state.colorSequence).then(()=>{
+  doComputerTurn(state.colorSequence).then(()=>{
     startUserTurn()
   })
 }
