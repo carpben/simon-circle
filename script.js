@@ -149,9 +149,6 @@ function handleGameSuccess(){
 function colorMouseDown(color){
   if (state.turn!=TURN.user){return}
 
-  // if (!state.squareClickReady){return}
-  // state.squareClickReady=false
-
   if (state.colorSequence[state.step]!==color) {
     handleUserMistake()
     return
@@ -159,16 +156,6 @@ function colorMouseDown(color){
 
   state.step++
   brightenColor(color)
-    // .then(()=>{
-    //   if (state.step==state.challenge){
-    //     handleGameSuccess()
-    //   }
-    //   else if (state.step === state.colorSequence.length){
-    //     handleLevelSuccess()
-    //   } else {
-    //     state.squareClickReady = true
-    //   }
-    // })
 }
 
 function colorMouseUp(){
@@ -201,23 +188,8 @@ function showComputerColor(color){
   })
 }
 
-// function getDelay (delay){
-//   return new Promise ((resolve,reject) => {
-//     setTimeout(()=>{resolve()}, delay)
-//   })
-// }
-
 function showSequence(colorSequence=[], resolve) {
-  // return new Promise((resolve, reject)=>{
-  //
-  //
-  // })
 
-  //... stuff happens ...
-  //some asyc stuff
-  // resolve()
-
-  // return done
   if (state.turn!=TURN.computer){
     console.log('ShowSequence, state.turn = ', state.turn)
   }
@@ -228,10 +200,6 @@ function showSequence(colorSequence=[], resolve) {
     resolve()
     return
   }
-    // return new Promise (function(resolve, reject){
-    //   resolve()
-    // })
-  // }
 
   let color = colorSequence.shift()
 
@@ -239,16 +207,6 @@ function showSequence(colorSequence=[], resolve) {
     .then(()=>{
       setTimeout(function(){showSequence(colorSequence, resolve)},DELAY)
     })
-
-
-  // return new Promise ( (reject, resolve) => {
-  //   showComputerColor(color)
-  //     .then(()=>{
-  //       getDelay()
-  //         .then (()=>{showSequence(colorSequence)},DELAY)
-  //           .then (resolve())
-  //     })
-  // })
 }
 
 function doComputerTurn (){
@@ -303,5 +261,4 @@ function toggleStrictMode(){
 
 const simonGame = new SimonGame ({
   el: document.querySelector('#root')
-  // el : document.getElementById('root')
 })
